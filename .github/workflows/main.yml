@@ -8,7 +8,7 @@ on:
       - 'README.md'
       - 'AWS-MongoDB-Setup.docx'
       - 'Data Collection - Overview.docx'
-      - 'KEYS/**'
+      - 'KEYS/**' #Folder called Keys
 
 permissions:
   id-token: write
