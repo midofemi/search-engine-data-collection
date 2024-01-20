@@ -14,15 +14,18 @@ choices = {}
 
 
 # Fetch All Labels
-@app.get("/fetch")
+@app.get("/fetch") #We create a route that can get stuff
 def fetch_label():
+    """
+    What this function does is fetching all the labels from mongodb
+    """
     try:
         global choices
-        result = mongo.database['labels'].find()
-        documents = [document for document in result]
+        result = mongo.database['labels'].find() #Go to the labels inside your DB
+        documents = [document for document in result] #Fetch all of them for me
         choices = dict(documents[0])
-        response = {"Status": "Success", "Response": str(documents[0])}
-        return JSONResponse(content=response, status_code=200, media_type="application/json")
+        response = {"Status": "Success", "Response": str(documents[0])} #Create a response for our action which is fetching the labels
+        return JSONResponse(content=response, status_code=200, media_type="application/json") #Send the response on the UI
     except Exception as e:
         raise e
 
@@ -30,11 +33,17 @@ def fetch_label():
 # Label Post Api
 @app.post("/add_label/{label_name}")
 def add_label(label_name: str):
-    result = mongo.database['labels'].find()
+    """
+    This function add a new label for our mongoDB
+    """
+    result = mongo.database['labels'].find() #Before adding a label. It makes sense to check if that label is present or not. So look at all
+                                             #the labels
     documents = [document for document in result]
     last_value = list(map(int, list(documents[0].keys())[1:]))[-1]
+    #Here we are just adding that new label in mongoDB
     response = mongo.database['labels'].update_one({"_id": documents[0]["_id"]},
                                                    {"$set": {str(last_value + 1): label_name}})
+    #If after the search we dont find the label. Then also add that label to our S3 bucket just like we did with mongoDB above
     if response.modified_count == 1:
         response = s3.add_label(label_name)
         return {"Status": "Success", "S3-Response": response}

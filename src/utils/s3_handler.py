@@ -13,11 +13,11 @@ class S3Connection:
 
     def __init__(self):
         session = boto3.Session(
-            aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
-            aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
+            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
         )
         self.s3 = session.resource("s3")
-        self.bucket = self.s3.Bucket(os.environ["AWS_BUCKET_NAME"])
+        self.bucket = self.s3.Bucket(os.getenv("AWS_BUCKET_NAME"))
 
     def add_label(self, label: str) -> Dict:
         """

@@ -5,6 +5,23 @@ This Repository contains code for data collection which is required to train Emb
 ![image](https://user-images.githubusercontent.com/40850370/194913612-69d32e6d-56b7-4b1b-a811-48c6c5b27f52.png)
 ![image](https://user-images.githubusercontent.com/40850370/194917419-ca176a45-bafb-4346-9942-cd59f042f33b.png)
 
+# Clone the Repository
+```
+git clone https://github.com/Deep-Learning-01/Deep-Authenticator-Frontend.git
+```
+### Activate Conda environment
+```
+conda activate env/
+```
+### Install requirements
+```
+pip install -r requirements.txt
+```
+### Create conda environment
+```
+conda create -p ./env python=3.8.13 -y
+```
+
 ## Actions Workflow 
 1. On push checkout the code and create docker container on git-hub server.
 2. Push the image to Ecr with production tag 
